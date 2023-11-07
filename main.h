@@ -1,22 +1,25 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+
 #include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
-#include <sys/stat.h>
+#include <errno.h>
 
-int control(char *command_token[], char *env[]);
-int execute(char *command[], char *env[]);
 
-char **token(char *);
-void free_command(char **);
-void* _realloc(void* array, size_t* size, size_t new_size);
+#define LINEBUF 1024
+#define ARGBUF  64
+#define DELIMIT " \t\r\n\a"
 
-int excute_builtin(char *command[]);
-int which_builtin(char *command[]);
+char    *readLine();
+char    **parse(char *);
+void    execfun(char **);
+void    cdfun(char **);
+void    exitfun(char **);
 
+
+#define BUILTIN_NUM ((sizeof(builtins)) / (sizeof(builtin)))
 #endif
