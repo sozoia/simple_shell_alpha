@@ -8,6 +8,7 @@
 char **token(char *str)
 {
 	int i = 0;
+	size_t old, new;
 	char *token;
 	char **result = NULL;
 
@@ -30,7 +31,9 @@ char **token(char *str)
         	}
 
         	i++;
-		result = (char **)realloc(result, sizeof(char *) * (i + 2)); 
+		old = sizeof(char *) * (i + 1);
+		new = sizeof(char *) * (i + 2);
+		result = (char **)_realloc(result,&old,new);
 		if (!result) 
 		{
         		perror("realloc");
