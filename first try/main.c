@@ -1,4 +1,5 @@
 #include "main.h"
+#include "main.h"
 
 /**
  * main - entry point
@@ -22,7 +23,11 @@ int main(int argc, char *argv[], char *env[])
 			write(1,&prom,5);
 
 		if (getline(&arr, &co, stdin) == -1)
+		{
+			if(arr)
+			free(arr);
 			exit (0);
+		}
 
 		command_token = token(arr);
 		if (command_token) 
