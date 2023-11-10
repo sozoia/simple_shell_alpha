@@ -21,7 +21,6 @@ extern char **environ;
 char    *readLine();
 char    **parse(char *);
 int    execfun(char **);
-int	envfun(char ** );
 int    cdfun(char **);
 int    exitfun(char **);
 char    *_getenv(const char *);
@@ -29,10 +28,8 @@ int     _execvp_(const char *, char * const *);
 
 
 void	free_command(char **arr);
-char	*getpath(const char *name, char *env[]);
-char 	*_getenv2(char *name, char *env[]);
-void	*_realloc(void* array, size_t* size, size_t new_size);
-int 	_setenv(char **args);
+char *getpath(const char *name, char *env[]);
+char *_getenv2(char *name, char *env[]);
 
 #define BUILTIN_NUM ((sizeof(builtins)) / (sizeof(builtin)))
 #endif

@@ -30,8 +30,6 @@ char **parse(char *line)
                         tokens = realloc(tokens, cap);
                         if (!tokens)
                         {
-                                if(tokens)
-                                free(tokens);
                                 perror("./shell: tokens error");
                                 return(NULL);
                         }

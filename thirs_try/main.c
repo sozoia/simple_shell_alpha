@@ -8,7 +8,7 @@ int main(void)
 {
         char *line = NULL, **tokens;
 	size_t len = 0;
-	int status = 0;
+	int status;
         const char *prompt = "(shell A&M)$ ";
 
         while(1)
