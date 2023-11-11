@@ -1,5 +1,6 @@
 #include "main.h"
 
+int exit_stat = 0;
 /**
  * main - entry point
  * Return: 0
@@ -8,8 +9,8 @@ int main(void)
 {
         char *line = NULL, **tokens;
 	size_t len = 0;
-	int status = 0;
         const char *prompt = "(shell A&M)$ ";
+        static int status = 0;
 
         while(1)
         {
@@ -21,15 +22,15 @@ int main(void)
 
                 tokens = parse(line);
 
-                if (tokens[0])
+                if(tokens[0])
                         status = execfun(tokens);
+
 		if(tokens)
-                free(tokens);
+                        free(tokens);
         }
 	if(line)
 		free(line);
 
         exit(status);
-
         return (0);
 }

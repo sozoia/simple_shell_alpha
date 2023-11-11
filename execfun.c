@@ -37,6 +37,7 @@ int execfun(char **args)
                         waitpid(pid, &status, WUNTRACED);
                 } while (!WIFEXITED(status) && !WIFSIGNALED(status));
                 return (WEXITSTATUS(status));
+               
         }
         else if (pid == 0)
         {
