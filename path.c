@@ -10,7 +10,7 @@ char *_getenv2(char *name, char *env[])
 {
 	int i = 0;
 	char *token = NULL;
-
+	
 	while (env[i])
 	{
 		token = strtok(env[i],"=");

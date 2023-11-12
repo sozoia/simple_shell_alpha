@@ -1,15 +1,44 @@
 #include "main.h"
 
+/**
+ * _getenv - Retrieves the value of an environment variable by name.
+ * @name: The name of the environment variable.
+ *
+ * Return: The value of the environment variable, or NULL if not found or on error.
+ */
 char *_getenv(const char *name)
 {
-        size_t len = strlen(name);
-        char **ep;
-        if (!__environ || name[0] == '\0')
-                return (NULL);
-        for (ep = __environ; *ep != NULL; ++ep)
+    extern char **environ;
+        char **env;
+    for (env = environ; *env != NULL; env++)
+    {
+        char *equal_sign = strchr(*env, '=');
+
+        if (equal_sign != NULL)
         {
-                if (name[0] == (*ep)[0] && strncmp(name, *ep, len) == 0 && (*ep)[len] == '-')
-                        return (*ep + len + 1);
+            size_t var_name_length = equal_sign - *env;
+
+            if (strncmp(*env, name, var_name_length) == 0 && name[var_name_length] == '\0')
+            {
+            
+                size_t value_length = strlen(equal_sign + 1);
+                char *value = (char *)malloc(value_length + 1);
+
+                if (value != NULL)
+                {
+                  
+                    strcpy(value, equal_sign + 1);
+                    return value;
+                }
+                else
+                {
+                
+                    perror("_getenv: malloc");
+                    return NULL;
+                }
+            }
         }
-        return (NULL);
+    }
+
+    return NULL;
 }

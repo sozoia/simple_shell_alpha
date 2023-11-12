@@ -28,12 +28,14 @@ int	parse_var(char **args);
 
 int    execfun(char **);
 int	envfun(char ** );
-int	execbul(char **args)
+int	execbul(char **);
 int    cdfun(char **);
 int    exitfun(char **);
+int	_unsetenv(const char *);
+int 	_setenv(char **args);
 
 char    *_getenv(const char *);
-char	*getpath(const char *name, char *env[]);
+char	*getpath(const char *, char *env[]);
 
 void	*_realloc(void* array, size_t* size, size_t new_size);
 
@@ -41,7 +43,7 @@ void	*_realloc(void* array, size_t* size, size_t new_size);
 int     _execvp_(const char *, char * const *);
 void	free_command(char **arr);
 char 	*_getenv2(char *name, char *env[]);
-int 	_setenv(char **args);
+
 char    *readLine();
 
 #define BUILTIN_NUM ((sizeof(builtins)) / (sizeof(builtin)))

@@ -9,24 +9,30 @@ int cdfun(char **command)
 {
 	char *pwd = NULL, *old = NULL;
 
-	if(!command[1])
-	return(1);
+	if(!command[1])		/*if no path don't do anything*/
+		return(1);	/*no error message either !!*/
 
-	if(strcmp(command[1], "-") == 0)
+	if(strcmp(command[1], "-") == 0)	/*last WD from env var*/
 	{
-		old = getenv("OLDPWD");
-		pwd = getenv("PWD");
+		old = _getenv("OLDPWD");
+		pwd = _getenv("PWD");
 
 		if(!old || !pwd)
 		return(1);
 
 		if (chdir(old) == -1)
 		{
+			free(pwd);
+			free(old);
+			printf("got err\n");
 			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n",command[0], command[1]);
 			return(2);
 		}
 		setenv("OLDPWD", pwd, 1);
 		setenv("PWD", old, 1);
+		printf("info updated\n");
+		free(old);
+		free(pwd);
 		return(0);
 	}
 	else if (chdir(command[1]) == -1)
@@ -34,13 +40,18 @@ int cdfun(char **command)
 		fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n",command[0], command[1]);
 		return(2);
 	}
-		pwd = getenv("PWD");
-		if(!pwd || !old)
-		return(1);
-
+		pwd = _getenv("PWD");
+		printf("pwd: %s\n",pwd);
+		if(!pwd)
+		{
+			free(pwd);
+			return(1);
+		}
+		printf("pwd: %s\n",pwd);
 		setenv("OLDPWD", pwd, 1);
 		setenv("PWD", command[1], 1);
-	return(0);
+		free(pwd);
+		return(0);
 }
 /**
  * isNumber - Check if a string is a valid number.
@@ -67,7 +78,7 @@ int isNumber(const char *str) {
 */
 int exitfun(char **command)
 {
-	int status;
+	int status = exit_stat;
 
 	if (!command[1])
 	{
@@ -92,7 +103,11 @@ int exitfun(char **command)
 
 	return(2);
 }
-
+/**
+ * envfun - print the env vars
+ * @args: command arr of str
+ * Return: 0 if success else 1
+*/
 int envfun(char ** args)
 {
 	char **env = environ;
