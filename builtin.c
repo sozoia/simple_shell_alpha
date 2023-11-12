@@ -18,7 +18,13 @@ int cdfun(char **command)
 		pwd = _getenv("PWD");
 
 		if(!old || !pwd)
-		return(1);
+		{
+			if(old)
+				free(old);
+			if(pwd)
+				free(pwd);
+			return(1);
+		}
 
 		if (chdir(old) == -1)
 		{
@@ -42,7 +48,6 @@ int cdfun(char **command)
 	pwd = _getenv("PWD");
 	if(!pwd)
 	{
-		free(pwd);
 		return(1);
 	}
 	setenv("OLDPWD", pwd, 1);	/*we need to update the env var*/
@@ -78,7 +83,7 @@ int exitfun(char **command)
 
 	if (!command[1])
 	{
-	free(command);		/*because i am exiting the prccess*/
+	free_command(command);		/*because i am exiting the prccess*/
 	exit(exit_stat);	/*exit_stat is global var*/
 	}
 
@@ -91,7 +96,7 @@ int exitfun(char **command)
 
        if (command[1] && status >= 0)
        {
-		free(command);
+		free_command(command);
         	exit(status);
        }
 	else

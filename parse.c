@@ -77,7 +77,6 @@ int parse_var(char **args)
 			else if (args[i][j] == '$')	/*when no valid var remove the string*/ 
 			{
                 		memmove(args[i] + j, args[i + 1], strlen(args[i + 1]) + 1);
-                		i--;  
                 		k = 0;
         		}
 		}

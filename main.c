@@ -48,8 +48,9 @@ int main(void)
         }
 	if(line)
 		free(line);
+        line = NULL;
         if(envo != length(environ))      /*this should only work if i set or unset a new env var*/
-                free(environ);          /*there was an infinite memorl leak*/
+                free(environ);         /*there was an infinite memorl leak*/
         exit(status);
         return (0);
 }
