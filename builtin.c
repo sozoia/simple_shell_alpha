@@ -78,12 +78,12 @@ int isNumber(const char *str) {
 */
 int exitfun(char **command)
 {
-	int status = exit_stat;
+	int status;
 
 	if (!command[1])
 	{
-	free_command(command);
-	exit(0);
+	free(command);
+	exit(exit_stat);
 	}
 
 	status = atoi(command[1]);
@@ -95,7 +95,7 @@ int exitfun(char **command)
 
        if (command[1] && status >= 0)
        {
-		free_command(command);
+		free(command);
         	exit(status);
        }
 	else
