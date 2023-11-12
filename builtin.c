@@ -22,15 +22,14 @@ int cdfun(char **command)
 
 		if (chdir(old) == -1)
 		{
-			free(pwd);
+			free(pwd);	/*cause _getenv allocate mem*/
 			free(old);
-			printf("got err\n");
 			fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n",command[0], command[1]);
 			return(2);
 		}
-		setenv("OLDPWD", pwd, 1);
-		setenv("PWD", old, 1);
-		printf("info updated\n");
+		printf("%s\n",old);		/*when cd - should print the new path (old)*/
+		setenv("OLDPWD", pwd, 1);	/*we need to update the env var*/
+		setenv("PWD", old, 1);		/*we need to update the env var*/
 		free(old);
 		free(pwd);
 		return(0);
@@ -40,35 +39,32 @@ int cdfun(char **command)
 		fprintf(stderr, "./hsh: 1: %s: can't cd to %s\n",command[0], command[1]);
 		return(2);
 	}
-		pwd = _getenv("PWD");
-		printf("pwd: %s\n",pwd);
-		if(!pwd)
-		{
-			free(pwd);
-			return(1);
-		}
-		printf("pwd: %s\n",pwd);
-		setenv("OLDPWD", pwd, 1);
-		setenv("PWD", command[1], 1);
+	pwd = _getenv("PWD");
+	if(!pwd)
+	{
 		free(pwd);
-		return(0);
+		return(1);
+	}
+	setenv("OLDPWD", pwd, 1);	/*we need to update the env var*/
+	setenv("PWD", command[1], 1);	/*we need to update the env var*/
+	free(pwd);
+	return(0);
 }
 /**
  * isNumber - Check if a string is a valid number.
  * @str: The input string to check.
- *
  * Return: 1 if the string is a number, 0 otherwise.
  */
-int isNumber(const char *str) {
-    char *endptr;
-    strtol(str, &endptr, 10);  /* Base 10 for decimal integers */
+int isNumber(const char *str) 
+{
+	char *endptr;
+	strtol(str, &endptr, 10);  /* Base 10 for decimal integers */
 
-    /* Check if strtol successfully parsed the entire string */
-    if (*endptr != '\0') {
+/* Check if strtol successfully parsed the entire string */
+	if (*endptr != '\0') 
         return 0;
-    }
 
-    return 1;
+	return 1;
 }
 
 /**
@@ -82,8 +78,8 @@ int exitfun(char **command)
 
 	if (!command[1])
 	{
-	free(command);
-	exit(exit_stat);
+	free(command);		/*because i am exiting the prccess*/
+	exit(exit_stat);	/*exit_stat is global var*/
 	}
 
 	status = atoi(command[1]);
