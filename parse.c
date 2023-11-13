@@ -50,7 +50,8 @@ int parse_var(char **args)
 {
 	int i, j, k = 1,l;
 	pid_t pid = getpid();
-
+	char *env_var;
+ 
 	for (i = 0; args[i]; i++) 
 	{
 		for (j = 0; args[i][j]; j++) 
@@ -74,11 +75,25 @@ int parse_var(char **args)
                 		}
 				return(0);
 			}
-			else if (args[i][j] == '$')	/*when no valid var remove the string*/ 
+			else if (args[i][0] == '$' && args[i][1] != '$' && args[i][1] != '?')	/*when no valid var remove the string*/ 
 			{
-                		memmove(args[i] + j, args[i + 1], strlen(args[i + 1]) + 1);
+			env_var = getenv(args[i]);
+			if (env_var != NULL && args[i][0] == '$')
+			{
+				strcpy(args[i],env_var);
+				free(env_var);
+			}
+                		/*memmove(args[i] + 0, args[i + 1], strlen(args[i + 1]) + 1); */
                 		k = 0;
-        		}
+        		}	
+			else if(args[i][j] == '\\')
+			{
+				char ch;
+				ch = args[i][j + 1];
+				replaceOrRemove(args[i],ch);
+			}
+
+
 		}
 	}
 	return (k);

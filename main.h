@@ -41,7 +41,7 @@ void	*_realloc(void* array, size_t* size, size_t new_size);
 int	_strcmp(const char *, const char *);
 int	isNumber(const char *); 
 int	_strlen(const char *);
-
+void	replaceOrRemove(char str[], char);
 /*not used yet:*/
 void	free_command(char **arr);
 char 	*_getenv2(char *name, char *env[]);

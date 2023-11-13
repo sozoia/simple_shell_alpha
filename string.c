@@ -19,7 +19,10 @@ int _strcmp(const char *s1, const char *s2)
         	s1++;
         	s2++;
 	}
+	if(*s1 && *s2)
 	return (*s1 - *s2);
+	else
+	return(1);
 }
 
 /**
@@ -51,4 +54,28 @@ int isNumber(const char *str)
         return 0;
 
 	return 1;
+}
+/**
+ * replaceOrRemove - f
+ * @str:
+ * @target:
+ * 
+*/
+void replaceOrRemove(char str[], char target) 
+{
+    int length = strlen(str),i;
+ 
+    for (i = 0; i < length; i++) 
+    {
+        if (str[i] == target) 
+	{
+
+            if (i < length - 1) 
+	    {
+                str[i] = str[i + 1];
+            }
+	    else 
+                str[i] = '\0';
+        }
+    }
 }

@@ -11,7 +11,7 @@ int cdfun(char **command)
 
 	if(!command[1])				/*if no path don't do anything*/
 		return(1);			/*no error message either !!*/
-	if(_strcmp(command[1], "-") == 0)	/*last WD from env var*/
+	if(strcmp(command[1], "-") == 0)	/*last WD from env var*/
 	{
 		old = _getenv("OLDPWD");
 		pwd = _getenv("PWD");
