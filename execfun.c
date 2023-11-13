@@ -6,15 +6,15 @@
 */
 int execbul(char **args)
 {
-	if (strcmp(args[0], "cd") == 0)
+	if (_strcmp(args[0], "cd") == 0)
 		return (cdfun(args));
-	else if (strcmp(args[0], "exit") == 0)
+	else if (_strcmp(args[0], "exit") == 0)
 		return (exitfun(args));
-	else if (strcmp(args[0], "env") == 0)
+	else if (_strcmp(args[0], "env") == 0)
 		return(envfun(args));
-	else if (strcmp(args[0], "setenv") == 0)
+	else if (_strcmp(args[0], "setenv") == 0)
 		return(_setenv(args));
-	else if (strcmp(args[0], "unsetenv") == 0)
+	else if (_strcmp(args[0], "unsetenv") == 0)
 		return(_unsetenv(args[1]));
 	else
 	return(-1);

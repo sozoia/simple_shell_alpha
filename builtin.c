@@ -9,14 +9,12 @@ int cdfun(char **command)
 {
 	char *pwd = NULL, *old = NULL;
 
-	if(!command[1])		/*if no path don't do anything*/
-		return(1);	/*no error message either !!*/
-
-	if(strcmp(command[1], "-") == 0)	/*last WD from env var*/
+	if(!command[1])				/*if no path don't do anything*/
+		return(1);			/*no error message either !!*/
+	if(_strcmp(command[1], "-") == 0)	/*last WD from env var*/
 	{
 		old = _getenv("OLDPWD");
 		pwd = _getenv("PWD");
-
 		if(!old || !pwd)
 		{
 			if(old)
@@ -25,7 +23,6 @@ int cdfun(char **command)
 				free(pwd);
 			return(1);
 		}
-
 		if (chdir(old) == -1)
 		{
 			free(pwd);	/*cause _getenv allocate mem*/
@@ -47,31 +44,12 @@ int cdfun(char **command)
 	}
 	pwd = _getenv("PWD");
 	if(!pwd)
-	{
 		return(1);
-	}
 	setenv("OLDPWD", pwd, 1);	/*we need to update the env var*/
 	setenv("PWD", command[1], 1);	/*we need to update the env var*/
 	free(pwd);
 	return(0);
 }
-/**
- * isNumber - Check if a string is a valid number.
- * @str: The input string to check.
- * Return: 1 if the string is a number, 0 otherwise.
- */
-int isNumber(const char *str) 
-{
-	char *endptr;
-	strtol(str, &endptr, 10);  /* Base 10 for decimal integers */
-
-/* Check if strtol successfully parsed the entire string */
-	if (*endptr != '\0') 
-        return 0;
-
-	return 1;
-}
-
 /**
  * exitfun - this is impelemntaion of the builtin "exit" command.
  * @command: an array of string contain the command exit.
